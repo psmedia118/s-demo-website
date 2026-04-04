@@ -1,164 +1,150 @@
-/* Tablet Styles */
 @media (max-width: 1024px) {
     section {
-        padding: 80px 0;
+        padding: 100px 0; /* Keep it airy, but slightly reduced */
     }
     
     .hero-left h1 {
-        font-size: 3rem;
+        font-size: clamp(3rem, 8vw, 4.5rem);
     }
     
     .services-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
     }
     
     .footer-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 4rem;
     }
     
-    .carousel-prev {
-        left: 0;
-    }
-    
-    .carousel-next {
-        right: 0;
+    .carousel-prev, .carousel-next {
+        /* Move arrows slightly outside for cleaner look on wide tablets */
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--onyx);
     }
 }
 
-/* Mobile Styles */
+/* Mobile Styles (Phones & Small Tablets) */
 @media (max-width: 768px) {
+    :root {
+        --anim-distance: 20px; /* Smaller movement for mobile performance */
+    }
+
     section {
-        padding: 60px 0;
+        padding: 80px 0;
     }
     
     .section-title {
-        font-size: 2rem;
+        font-size: clamp(2rem, 10vw, 2.8rem);
+        margin-bottom: 2.5rem;
     }
-    
-    /* Navigation */
+
+    /* Navigation - Ensure the menu feels substantial */
     .desktop-menu {
         display: none;
     }
     
     .hamburger {
         display: flex;
+        padding: 10px; /* Larger touch target */
     }
     
-    /* Hero Section */
+    /* Hero Section - Maintaining Premium Balance */
     .hero {
         flex-direction: column;
     }
     
     .hero-left {
-        flex: 100%;
-        padding: 60px 5%;
-        min-height: 50vh;
+        padding: 80px 8% 60px; /* More side padding for luxury feel */
+        text-align: center;
+        align-items: center;
     }
     
-    .hero-left h1 {
-        font-size: 2.2rem;
+    .hero-left p {
+        margin: 0 auto 2.5rem;
     }
     
     .hero-right {
-        flex: 100%;
-        min-height: 400px;
+        min-height: 450px;
+        order: -1; /* Image first on mobile for visual impact */
     }
     
     .hero-buttons {
+        width: 100%;
         flex-direction: column;
+        gap: 15px;
     }
-    
-    .hero-buttons .btn-primary,
-    .hero-buttons .btn-outline {
-        text-align: center;
-    }
-    
-    /* Grid Layouts */
-    .services-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .masonry-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .split-layout {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
+
+    /* Modern Grids - Added padding to prevent edge-touching */
+    .services-grid, 
+    .masonry-grid, 
+    .split-layout, 
+    .footer-grid, 
     .hours-grid {
         grid-template-columns: 1fr;
+        gap: 30px;
     }
     
-    /* Carousel */
-    .carousel-prev,
-    .carousel-next {
-        width: 30px;
-        height: 30px;
-        font-size: 0.9rem;
-    }
-    
-    /* Contact Form */
-    .contact-split .split-layout {
-        gap: 2rem;
-    }
-    
-    /* Thank You */
-    .thank-you-content {
-        padding: 2rem;
-        margin: 0 20px;
-    }
-    
-    .thank-you-buttons {
-        flex-direction: column;
-    }
-    
-    /* Aura Experience */
+    /* Aura Experience - The cinematic moment */
     .aura-experience .overlay {
-        padding: 60px 0;
+        padding: 100px 20px;
     }
     
     .aura-experience h2 {
-        font-size: 2rem;
+        font-size: 2.4rem;
+    }
+
+    /* Touch Optimization for Carousel */
+    .carousel-prev, .carousel-next {
+        display: none; /* Hide arrows on touch devices in favor of swipe */
     }
     
-    .aura-experience p {
-        font-size: 1rem;
-        padding: 0 20px;
+    /* Form Refinement */
+    .form-group {
+        margin-bottom: 2rem;
     }
     
-    /* Page Header */
-    .page-header {
-        padding: 50px 0;
-    }
-    
-    .page-header h1 {
-        font-size: 2rem;
+    /* Thank You Page */
+    .thank-you-content {
+        padding: 4rem 1.5rem;
+        border-radius: 0; /* Full width feel */
+        box-shadow: none;
     }
 }
 
-/* Small Mobile */
+/* Small Mobile (Refining the details) */
 @media (max-width: 480px) {
+    .container {
+        padding: 0 25px;
+    }
+
     .hero-left h1 {
-        font-size: 1.8rem;
+        font-size: 2.4rem;
+        letter-spacing: -0.01em;
     }
     
-    .section-title {
-        font-size: 1.8rem;
+    .btn-primary, .btn-outline {
+        width: 100%; /* Consistent full-width buttons on small screens */
+        padding: 16px 20px;
+        letter-spacing: 0.1em;
     }
     
     .quote {
-        font-size: 1rem;
+        font-size: 1.1rem;
+        line-height: 1.6;
     }
-    
+
     .footer-logo {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
+    }
+}
+
+/* Landscape Mode Refinement */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero-left {
+        padding: 40px 5%;
+    }
+    .hero-right {
+        display: none; /* Hide image to prioritize text on short screens */
     }
 }
