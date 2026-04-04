@@ -1,8 +1,17 @@
-/* Keyframes */
+
+
+:root {
+    --anim-duration: 0.8s;
+    --anim-ease: cubic-bezier(0.16, 1, 0.3, 1); /* Custom Out-Expo for premium feel */
+    --anim-distance: 30px;
+    --hover-lift: -8px;
+}
+
+/* Keyframes - Refined with Hardware Acceleration */
 @keyframes fadeUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(var(--anim-distance));
     }
     to {
         opacity: 1;
@@ -11,18 +20,14 @@
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes slideInLeft {
     from {
         opacity: 0;
-        transform: translateX(-50px);
+        transform: translateX(calc(var(--anim-distance) * -1.5));
     }
     to {
         opacity: 1;
@@ -33,7 +38,7 @@
 @keyframes slideInRight {
     from {
         opacity: 0;
-        transform: translateX(50px);
+        transform: translateX(calc(var(--anim-distance) * 1.5));
     }
     to {
         opacity: 1;
@@ -41,50 +46,57 @@
     }
 }
 
-/* Animation Classes */
-.fade-up {
-    animation: fadeUp 0.6s ease forwards;
-    opacity: 0;
+@keyframes pulse-soft {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
 }
 
-.fade-in {
-    animation: fadeIn 0.6s ease forwards;
-    opacity: 0;
+/* Base Utility Classes */
+.animate {
+    animation-duration: var(--anim-duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: var(--anim-ease);
+    will-change: transform, opacity;
+    opacity: 0; /* Hidden until triggered */
 }
 
-.slide-left {
-    animation: slideInLeft 0.6s ease forwards;
-    opacity: 0;
-}
+.fade-up    { animation-name: fadeUp; }
+.fade-in    { animation-name: fadeIn; }
+.slide-left { animation-name: slideInLeft; }
+.slide-right { animation-name: slideInRight; }
 
-.slide-right {
-    animation: slideInRight 0.6s ease forwards;
-    opacity: 0;
-}
+/* Dynamic Delay Logic (Using a loop-like structure) */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
 
-/* Delay Classes */
-.delay-1 { animation-delay: 0.2s; }
-.delay-2 { animation-delay: 0.4s; }
-.delay-3 { animation-delay: 0.6s; }
-.delay-4 { animation-delay: 0.8s; }
-
-/* Hover Animations */
+/* Interactive States */
 .service-card,
 .team-card,
 .masonry-item {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: 
+        transform 0.4s var(--anim-ease), 
+        box-shadow 0.4s var(--anim-ease),
+        filter 0.4s ease;
+    backface-visibility: hidden; /* Prevents text jitter during transform */
 }
 
 .service-card:hover,
 .team-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(var(--hover-lift)) scale(1.01);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
 }
 
-/* Scroll Reveal */
+/* Enhanced Scroll Reveal */
 .reveal {
     opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
+    transform: translateY(var(--anim-distance));
+    transition: 
+        opacity var(--anim-duration) var(--anim-ease), 
+        transform var(--anim-duration) var(--anim-ease);
 }
 
 .reveal.active {
@@ -92,19 +104,18 @@
     transform: translateY(0);
 }
 
-/* Button Pulse Animation */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
+/* Soft Pulse for Buttons */
+.btn-primary:active {
+    animation: pulse-soft 0.4s var(--anim-ease);
 }
 
-.btn-primary:active {
-    animation: pulse 0.3s ease;
+/* Accessibility: Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+    *, ::before, ::after {
+        animation-delay: -1ms !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        background-attachment: initial !important;
+        transition-duration: 0s !important;
+    }
 }
